@@ -4,12 +4,12 @@ const hre = require("hardhat");
 
 async function main() {
 
-  var contract_addr = "0x755a999ECB0FBA1e3380317b4303D0BdD31DBC35";
+  var contract_addr = "0x7c8c43fbb3406380777fa92e4ded18c0718d4ab5";
   await hre.run("verify:verify", {
     address: contract_addr,
-    // constructorArguments: [
-    //     "Spam Bank",
-    // ],
+    constructorArguments: [
+      3240,
+    ],
   });
 }
 
