@@ -34,6 +34,10 @@ module.exports = {
       url: `https://ropsten.infura.io/v3/${process.env.INFRA_KEY}`,
       accounts: [process.env.ETH_ACCOUNT_PK, process.env.ETH_ACCOUNT_PK1],
     },
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/${process.env.INFRA_KEY}`,
+      accounts: [process.env.ETH_ACCOUNT_PK, process.env.ETH_ACCOUNT_PK1],
+    },
     kovan: {
       url: `https://eth-kovan.alchemyapi.io/v2/${process.env.ALECHEMY_KOVAN_KEY}`, // `https://kovan.infura.io/v3/${process.env.INFRA_KEY}`,
       accounts: [process.env.ETH_ACCOUNT_PK, process.env.ETH_ACCOUNT_PK1],
@@ -43,7 +47,8 @@ module.exports = {
     apiKey: {
       ropsten: process.env.ETH_APIKEY,
       mainnet: process.env.ETH_APIKEY,
-      kovan: process.env.ETH_APIKEY
+      kovan: process.env.ETH_APIKEY,
+      rinkeby: process.env.ETH_APIKEY
     },
   }
 };
