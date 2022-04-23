@@ -4,6 +4,8 @@ coverage
 coverage.json
 typechain
 .DS_Store
+venv
+.idea
 
 #Hardhat files
 cache
