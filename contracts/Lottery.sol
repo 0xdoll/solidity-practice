@@ -12,14 +12,16 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBaseV2.sol";
 // 2. An admin will choose when the lottery is over.
 // 3. The lottery will select a random winner.
 
+// Ethereum Rinkeby only.
+
 abstract contract VRFv2Consumer is VRFConsumerBaseV2, Ownable {
     VRFCoordinatorV2Interface COORDINATOR;
     uint64 public s_subscriptionId;
     // Rinkeby coordinator. For other networks,
     // see https://docs.chain.link/docs/vrf-contracts/#configurations
 
-    address vrfCoordinator = 0x6168499c0cFfCaCD319c818142124B7A15E857ab;
-    bytes32 keyHash = 0xd89b2bf150e3b9e13446986e571fb9cab24b13cea0a43ea20a6049a85cc807cc;
+    address vrfCoordinator = 0x6168499c0cFfCaCD319c818142124B7A15E857ab; // Rinkeby
+    bytes32 keyHash = 0xd89b2bf150e3b9e13446986e571fb9cab24b13cea0a43ea20a6049a85cc807cc; // Rinkeby
     uint32 callbackGasLimit = 1000000;
     uint16 requestConfirmations = 3;
     uint32 numWords =  1;
