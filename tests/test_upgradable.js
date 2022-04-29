@@ -1,0 +1,55 @@
+
+const { ethers } = require("ethers");
+require('dotenv').config();
+const hre = require("hardhat");
+
+// npx hardhat run tests/test_upgradable.js --network rinkeby
+
+(async () => {
+
+    await hre.run('compile');
+
+    const Box = await hre.ethers.getContractFactory("Box");
+    const box = await Box.deploy();
+    await box.deployed();
+    console.log(`box v1 deploy to ${box.address}`);
+
+    const TransparentUpgradeableProxy = await hre.ethers.getContractFactory("TransparentUpgradeableProxy");
+    const transparentUpgradeableProxy = await TransparentUpgradeableProxy.deploy(box.address, "0x9147415daC1BD01676239F5F252596E4b61785a4", '0x');
+    await transparentUpgradeableProxy.deployed();
+    console.log(`transparentUpgradeableProxy deploy to ${transparentUpgradeableProxy.address}`);
+
+    await hre.run("verify:verify", {
+        address: box.address,
+    });
+
+    await hre.run("verify:verify", {
+        address: transparentUpgradeableProxy.address,
+        constructorArguments: [
+            box.address, "0x9147415daC1BD01676239F5F252596E4b61785a4", '0x'
+        ],
+    });
+
+    const BoxV2 = await hre.ethers.getContractFactory("BoxV2");
+    const boxV2 = await BoxV2.deploy();
+    await boxV2.deployed();
+    console.log(`box v2 deploy to ${boxV2.address}`);
+
+    await hre.run("verify:verify", {
+        address: "0xF82980B74E6dCbd16cB836F31636b3AD7e195e01", // boxV2.address,
+    });
+
+
+    // box v1 0x3a771cA453a610464a441aeB97c9e66dBF4d9a64
+    // proxy 0xC5549f932eE5707BF3500C76Cf88eEdd79223786
+    // box v2 0xF82980B74E6dCbd16cB836F31636b3AD7e195e01
+
+    var signer = (await hre.ethers.getSigners())[0]; // first signer.
+    const tokenArtifact = await hre.artifacts.readArtifact("TransparentUpgradeableProxy");
+    var proxy = new hre.ethers.Contract("0xC5549f932eE5707BF3500C76Cf88eEdd79223786", tokenArtifact.abi, signer);
+    var tx = await proxy.upgradeTo("0xF82980B74E6dCbd16cB836F31636b3AD7e195e01");
+    await tx.wait(1);
+    console.log(`upgradeTo tx -> ${JSON.stringify(tx)}`);
+
+
+})();
