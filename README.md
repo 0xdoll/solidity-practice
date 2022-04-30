@@ -11,5 +11,5 @@ npx hardhat run --network localhost scripts/deploy.js
 npx hardhat run --network localhost scripts/verify.js
 
 # link remix ide with local path.
-remixd -s /Users/ken/Desktop/web3/learn_eth -u https://remix.ethereum.org
+remixd -s . -u https://remix.ethereum.org
 ```
